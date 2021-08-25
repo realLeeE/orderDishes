@@ -1,0 +1,17 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: dishesService
+  mvc:
+    view:
+      prefix: /page/
+      suffix: .html
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 30MB
+
+dishesUrl: C:\Users\Administrator\Desktop\菜单.xls
+#dishesUrl: /usr/app/菜单.xls

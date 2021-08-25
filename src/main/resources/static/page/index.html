@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>打工人的日常点菜...</title>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+<h1>打工人的日常点菜...</h1>
+
+<form id="uploadForm" enctype="multipart/form-data">
+    菜单文件:<input id="file" name="file" type="file" multiple="multiple"/>
+    <br/>荤菜数量:<input id="meatNum" type="number" name="meatNum"/>
+    <br/>蔬菜数量:<input id="vegetableNum" type="number" name="vegetableNum"/>
+</form>
+<br/><button id="upload">点菜</button>
+<br/><button id="getDishes">下载菜单</button>
+<form id="queryCourseForm"></form>
+</body>
+<script type="text/javascript">
+    $(function () {
+        $("#upload").click(function () {
+            var formData = new FormData($("#uploadForm")[0]);
+            var meatNum = $('#uploadForm')[1];
+            var vegetableNum = $('#uploadForm')[2];
+            $.ajax({
+                type: 'post',
+                url: "/dishes/" + meatNum + "/" + vegetableNum,
+                data: formData,
+                cache: false,
+                processData: false,
+                contentType: false,
+                success: function (result) {
+                    alert(result);
+                },
+                error: function (result) {
+                    alert("上传失败");
+                }
+            });
+        });
+        $("#getDishes").click(function () {
+            var queryForm = $("#queryCourseForm");
+            var exportForm = $("<form action='/getDishes' method='post'></form>")
+            exportForm.html(queryForm.html());
+            $(document.body).append(exportForm);
+            exportForm.submit();
+            exportForm.remove();
+        });
+
+    });
+</script>
+</html>
